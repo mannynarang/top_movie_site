@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Add Movie{% endblock %}
+
+{% block content %}
+
+<div class="content">
+    <h1 class="heading">Add a Movie</h1>
+    <form action="{{url_for('add2')}}" method="POST">
+        {{form.csrf_token}}
+        {{form.title.label}}
+        {{form.title}}
+        {{form.submit}}
+    </form>
+</div>
+
+<div class="container">
+    <div class="row">
+        {%for result in results:%}
+        <div class="col-6 col-sm-3">
+            <div class="card" style="width: 18rem;">
+                <img src="{{result.img_url}}" class="card-img-top" alt="..." style="max-width:100px;width:100%">
+                <div class="card-body">
+                    <h5 class="card-title">{{result.title}} - {{result.year}}</h5>
+                    <p class="card-text">{{result.description}}</p>
+                    <a href="{{url_for('insert',title = result.title, year = result.year, description = result.description, img_url = result.img_url  ) }}"
+                       class="btn btn-primary"> Add Movie </a>
+                </div>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        {%endfor%}
+    </div>
+</div>
+
+
+{% endblock %}
